@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Registration | Vic Power</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js" defer></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Full page gradient background */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f0f0f0;
+    }
+
+    /* Container fills large part of viewport, with padding */
+    main.register-container {
+      background: #142a4c; /* dark blue shade */
+      padding: 3rem 4rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      width: 90vw;
+      max-width: 480px;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      color: #f0f0f0;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      color: #cbd5e1; /* light blue-gray */
+    }
+
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"] {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      margin-bottom: 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      background-color: #284b8f; /* medium blue */
+      color: #e2e8f0; /* light text */
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="email"]:focus,
+    form input[type="password"]:focus {
+      background-color: #3c6eb4; /* lighter blue */
+      box-shadow: 0 0 8px 2px #90cdf4;
+      outline: none;
+      color: #fff;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #142a4c;
+      background-color: #90cdf4; /* light blue button */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(144, 205, 244, 0.7);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background-color: #63b3ed; /* medium blue */
+      box-shadow: 0 6px 20px rgba(99, 179, 237, 0.9);
+      outline: none;
+    }
+
+    p.login-link {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+
+    p.login-link a {
+      color: #90cdf4;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    p.login-link a:hover,
+    p.login-link a:focus {
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 500px) {
+      main.register-container {
+        padding: 2rem 2rem;
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="register-container" role="main" aria-label="User Registration Form">
+    <h2>User Registration</h2>
+
+    <form id="registerForm" novalidate>
+      <label for="registerName">Name:</label>
+      <input type="text" id="registerName" name="registerName" required autocomplete="name" />
+
+      <label for="registerEmail">Email:</label>
+      <input type="email" id="registerEmail" name="registerEmail" required autocomplete="email" />
+
+      <label for="registerPassword">Password:</label>
+      <input type="password" id="registerPassword" name="registerPassword" required autocomplete="new-password" />
+
+      <label for="empCode">Employee Code (leave blank if not an employee):</label>
+      <input type="text" id="empCode" name="empCode" autocomplete="off" />
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p class="login-link">
+      Already have an account? <a href="index.html">Login here</a>
+    </p>
+  </main>
+
+  <script src="js/firebase.js" defer></script>
+  <script src="js/auth.js" defer></script>
+
+</body>
+</html>

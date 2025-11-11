@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+  <h2>Employee Login</h2>
+
+  <form id="employeeLoginForm">
+    <label for="empEmail">Email:</label><br />
+    <input type="email" id="empEmail" required /><br />
+
+    <label for="empPassword">Password:</label><br />
+    <input type="password" id="empPassword" required /><br /><br />
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p><a href="index.html">Back to User Login</a></p>
+
+  <!-- Firebase Initialization -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_mQ4Ext2ma5p4wz0rjz4ccMBIzE7rPiw",
+      authDomain: "vic-power.firebaseapp.com",
+      projectId: "vic-power",
+      storageBucket: "vic-power.appspot.com",
+      messagingSenderId: "952244053756",
+      appId: "1:952244053756:web:db933cf09e289a7e2ed979",
+      measurementId: "G-7Z5DF51HFY"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
+  <!-- Employee Login Logic -->
+  <script>
+    document.getElementById("employeeLoginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const email = document.getElementById("empEmail").value.trim();
+      const password = document.getElementById("empPassword").value;
+  
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+  
+        // Check if user is an employee in Firestore
+        const docRef = db.collection("employees").doc(user.uid);
+        const docSnap = await docRef.get();
+  
+        if (docSnap.exists) {
+          // User is an employee, proceed to dashboard
+          window.location.href = "employee-dashboard.html";
+        } else {
+          alert("You are not authorized as an employee.");
+          await auth.signOut();
+        }
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    });
+  </script>
+  

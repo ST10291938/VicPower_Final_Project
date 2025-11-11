@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Vic Power</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js" defer></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <style>
+    /* Background gradient and full screen centering */
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #003366, #004080);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #f5f5f7;
+    }
+
+    /* Container */
+    main.login-container {
+      background-color: #fff;
+      padding: 3rem 4rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      width: 90vw;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 75vh;
+      justify-content: center;
+    }
+
+    h2 {
+      font-weight: 800;
+      font-size: 2.8rem;
+      margin-bottom: 2.5rem;
+      color: #00264d;
+      letter-spacing: 0.05em;
+    }
+
+    form {
+      width: 100%;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 1.8rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      background-color: #fff;
+      color: #333;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #0056b3;
+      box-shadow: 0 0 8px 2px rgba(0, 86, 179, 0.3);
+      outline: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1.2rem 0;
+      background: #0056b3;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 6px 25px rgba(0, 86, 179, 0.4);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background: #003d80;
+      box-shadow: 0 8px 35px rgba(0, 61, 128, 0.5);
+      outline: none;
+    }
+
+    p.register-link {
+      margin-top: 2.2rem;
+      font-size: 1rem;
+      color: #555;
+      text-align: center;
+    }
+
+    p.register-link a {
+      color: #0056b3;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    p.register-link a:hover,
+    p.register-link a:focus {
+      color: #003d80;
+      text-decoration: underline;
+      outline: none;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 450px) {
+      main.login-container {
+        padding: 2rem 2.5rem;
+        min-height: auto;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        font-size: 1rem;
+      }
+
+      button[type="submit"] {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="login-container" role="main" aria-label="User Login Form">
+    <h2>Login</h2>
+    <form id="loginForm" novalidate>
+      <label for="loginEmail">Email:</label>
+      <input type="email" id="loginEmail" name="loginEmail" required autocomplete="email" />
+
+      <label for="loginPassword">Password:</label>
+      <input type="password" id="loginPassword" name="loginPassword" required autocomplete="current-password" />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="register-link">
+      Don't have an account? <a href="register.html">Register here</a>
+    </p>
+  </main>
+
+  <script src="js/firebase.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  
+</body>
+</html>

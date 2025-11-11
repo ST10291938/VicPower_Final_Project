@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Employee Profile | Vic Power</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js" defer></script>
+
+  <style>
+    /* Modern clean styling */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      margin: 0; padding: 0;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    nav {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      background: #5b3cc4;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(91, 60, 196, 0.3);
+    }
+    nav a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
+      color: #d6bcfa;
+      outline: none;
+    }
+
+    .profile-container {
+      background: white;
+      max-width: 400px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 2rem 2.5rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: #5b3cc4;
+    }
+    p {
+      margin: 0.25rem 0;
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .role {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #777;
+      font-weight: 600;
+    }
+    #loadingText {
+      font-size: 1rem;
+      color: #888;
+      margin-top: 1.5rem;
+    }
+    button#logoutBtn {
+      margin-top: 2rem;
+      background: #5b3cc4;
+      color: white;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button#logoutBtn:hover {
+      background: #482a9f;
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a href="employee-home.html">Back to Admin</a>
+    
+  </nav>
+
+  <main class="profile-container" role="main" aria-label="Employee Profile">
+    <h1 id="name">Loading...</h1>
+    <p id="email"></p>
+    <p id="role" class="role"></p>
+    <p id="loadingText">Fetching your profile...</p>
+    <button id="logoutBtn" aria-label="Logout">Logout</button>
+  </main>
+
+  <script src="js/firebase.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+
+      const nameElem = document.getElementById('name');
+      const emailElem = document.getElementById('email');
+      const roleElem = document.getElementById('role');
+      const loadingText = document.getElementById('loadingText');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      auth.onAuthStateChanged(user => {
+        if (!user) {
+          // Not logged in, redirect to login page
+          window.location.href = 'index.html';
+          return;
+        }
+
+        // Listen to user document in real-time
+        const userDocRef = db.collection('users').doc(user.uid);
+        userDocRef.onSnapshot(doc => {
+          if (!doc.exists) {
+            nameElem.innerText = 'Employee data not found.';
+            emailElem.innerText = '';
+            roleElem.innerText = '';
+            loadingText.style.display = 'none';
+            return;
+          }
+          const data = doc.data();
+
+          nameElem.innerText = data.name || 'No name set';
+          emailElem.innerText = data.email || user.email;
+          roleElem.innerText = data.role ? `Role: ${data.role}` : 'Role not specified';
+          loadingText.style.display = 'none';
+        }, error => {
+          console.error('Error fetching employee data:', error);
+          nameElem.innerText = 'Error loading data';
+          emailElem.innerText = '';
+          roleElem.innerText = '';
+          loadingText.style.display = 'none';
+        });
+      });
+
+      logoutBtn.onclick = () => {
+        auth.signOut().then(() => {
+          window.location.href = 'index.html';
+        });
+      };
+    });
+  </script>
+</body>
+</html>

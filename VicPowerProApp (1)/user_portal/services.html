@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our Services | Vic Power</title>
+  <style>
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Links */
+    a { color: #0056b3; text-decoration: none; transition: color 0.25s ease; }
+    a:hover, a:focus { color: #003d80; outline: none; }
+
+    /* Navigation Bar */
+    nav.main-nav {
+      background-color: #004080;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    nav.main-nav .logo {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: #fff;
+    }
+    nav.main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav.main-nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #cce0ff;
+      padding: 0.4rem 0.75rem;
+      border-radius: 4px;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+    nav.main-nav ul li a:hover,
+    nav.main-nav ul li a.active {
+      background-color: #003366;
+      color: #fff;
+    }
+
+    /* Hero Section */
+    header.hero {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center/cover;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #f0f4f8;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      padding: 0 1.5rem;
+    }
+    header.hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 64, 128, 0.65);
+      z-index: 0;
+    }
+    header.hero > * {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      text-align: center;
+    }
+    header.hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+    }
+    header.hero p {
+      font-size: 1.15rem;
+      font-weight: 400;
+    }
+
+    /* Main Container */
+    main.container {
+      max-width: 1000px;
+      margin: 3.5rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.3rem;
+      margin-bottom: 0.75rem;
+      color: #00264d;
+      font-weight: 700;
+    }
+    .section-subtitle {
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      font-size: 1.05rem;
+      color: #555;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+
+    /* Service Cards */
+    .service-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+    }
+    .service-image {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      filter: brightness(0.9);
+      transition: filter 0.3s ease;
+    }
+    .service-card:hover .service-image { filter: brightness(1); }
+
+    .service-content {
+      padding: 1.5rem 2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 1rem;
+    }
+    .service-description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .service-benefits {
+      font-size: 0.95rem;
+      color: #444;
+      list-style-type: disc;
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Book Now Button */
+    .book-btn {
+      align-self: center;
+      background-color: #004080;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .book-btn:hover {
+      background-color: #003366;
+      transform: translateY(-2px);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background-color: #0056b3;
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-radius: 14px;
+      max-width: 850px;
+      margin: 3rem auto 4rem;
+      box-shadow: 0 16px 45px rgba(0, 86, 179, 0.35);
+    }
+    .cta-section h3 { font-size: 2.1rem; margin-bottom: 1rem; }
+    .cta-section a.btn {
+      background-color: #e0e7ff;
+      color: #003366;
+      font-weight: 700;
+      padding: 0.85rem 2.25rem;
+      border-radius: 40px;
+      box-shadow: 0 6px 18px rgba(224, 231, 255, 0.7);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .cta-section a.btn:hover {
+      background-color: #00264d;
+      color: #fff;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      background-color: #004080;
+      color: #fff;
+      padding: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 600px) {
+      .service-title { font-size: 1.25rem; }
+      .service-description { font-size: 0.95rem; }
+      .book-btn { font-size: 0.9rem; padding: 0.6rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Navigation -->
+  <nav class="main-nav">
+    <div class="logo">Vic Power</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="booking.html">Book Now</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Our Services</h1>
+    <p>Discover how Vic Power supports your community with expert electrical services.</p>
+  </header>
+
+  <main class="container">
+    <h2 class="section-title">What We Offer</h2>
+    <p class="section-subtitle">We are committed to providing top-tier electrical services tailored to your needs.</p>
+
+    <section class="services-grid">
+      <!-- Service 1 -->
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600" 
+alt="Electrical installation" class="service-image">
+
+        <div class="service-content">
+          <h3 class="service-title">Electrical Installation</h3>
+          <p class="service-description">Professional installation of electrical wiring, fixtures, and systems for homes and businesses.</p>
+          <ul class="service-benefits">
+            <li>Safe and compliant installations</li>
+            <li>Energy-efficient designs</li>
+            <li>Custom solutions</li>
+          </ul>
+          <button class="book-btn" onclick="window.location.href='booking.html'">Book Now</button>
+        </div>
+      </article>
+
+      <!-- Service 2 -->
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzMjM4OTZ8MHwxfHNlYXJjaHwxfHxlbGVjdHJpY2FsJTIwcmVwYWlyfGVufDB8fHx8MTY5OTk0NzE0NQ&ixlib=rb-4.0.3&q=80&w=600" 
+alt="Electrical repair" class="service-image">
+
+        <div class="service-content">
+          <h3 class="service-title">Repairs & Maintenance</h3>
+          <p class="service-description">Reliable repair and maintenance services to ensure safe, efficient electrical systems.</p>
+          <ul class="service-benefits">
+            <li>Quick response times</li>
+            <li>Preventive maintenance plans</li>
+            <li>Comprehensive inspections</li>
+          </ul>
+          <button class="book-btn" onclick="window.location.href='booking.html'">Book Now</button>
+        </div>
+      </article>
+
+      <!-- Service 3 -->
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=600&q=80" alt="Solar panels" class="service-image">
+        <div class="service-content">
+          <h3 class="service-title">Renewable Energy Solutions</h3>
+          <p class="service-description">Expert installation and advice for solar systems and other renewable technologies.</p>
+          <ul class="service-benefits">
+            <li>Reduce your carbon footprint</li>
+            <li>Government incentives</li>
+            <li>Long-term savings</li>
+          </ul>
+          <button class="book-btn" onclick="window.location.href='booking.html'">Book Now</button>
+        </div>
+      </article>
+
+      <!-- Service 4 -->
+      <article class="service-card">
+        <img src="https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&w=600&q=80" alt="Safety inspection" class="service-image">
+        <div class="service-content">
+          <h3 class="service-title">Safety Inspections</h3>
+          <p class="service-description">Comprehensive safety checks to identify hazards and ensure compliance with regulations.</p>
+          <ul class="service-benefits">
+            <li>Detailed reports</li>
+            <li>Upgrade recommendations</li>
+            <li>Peace of mind</li>
+          </ul>
+          <button class="book-btn" onclick="window.location.href='booking.html'">Book Now</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+      <h3>Ready to Power Up Your Project?</h3>
+      <p>Book your service today and let our experts take care of your electrical needs.</p>
+      <a href="booking.html" class="btn">Book Now</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vic Power. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

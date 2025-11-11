@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us | Vic Power</title>
+  <style>
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafc;
+      color: #222;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    /* Navigation */
+    nav.main-nav {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #003366;
+      border-radius: 12px;
+      box-shadow: 0 5px 18px rgba(0, 51, 102, 0.5);
+      margin-bottom: 3rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav.main-nav .logo {
+      color: #f0f4f8;
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      user-select: none;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    }
+    nav.main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav.main-nav ul li a {
+      color: #cce0ff;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-decoration: none;
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+    nav.main-nav ul li a:hover,
+    nav.main-nav ul li a:focus,
+    nav.main-nav ul li a.active {
+      background-color: #002244;
+      color: #fff;
+      outline: none;
+      box-shadow: 0 0 12px #0056b3;
+    }
+
+    /* Page Header */
+    header.page-header {
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 3rem;
+    }
+    header.page-header h1 {
+      font-size: 3.5rem;
+      color: #003366;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      margin-bottom: 0.3rem;
+      text-shadow: 1px 2px 6px rgba(0, 51, 102, 0.25);
+    }
+    header.page-header p {
+      font-size: 1.25rem;
+      color: #555;
+      font-weight: 500;
+      letter-spacing: 0.7px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* About Content Section */
+    section.about-content {
+      max-width: 900px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      padding: 3rem 3rem 2rem;
+      margin-bottom: 3rem;
+      color: #333;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      user-select: text;
+      transition: box-shadow 0.3s ease;
+    }
+    section.about-content:hover {
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+    }
+    section.about-content h2 {
+      color: #004080;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 3px solid #0056b3;
+      padding-bottom: 0.3rem;
+      user-select: text;
+    }
+    section.about-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Team Section */
+    section.team {
+      max-width: 900px;
+      width: 100%;
+      background: #e9f1ff;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 86, 179, 0.15);
+      padding: 2rem 2.5rem;
+      color: #003366;
+    }
+    section.team h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      margin-bottom: 1.75rem;
+      letter-spacing: 1.1px;
+      text-shadow: 0 0 5px #0056b3;
+    }
+    ul#teamList {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1.7rem;
+    }
+    ul#teamList li {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.5rem 1.8rem;
+      box-shadow: 0 6px 20px rgba(0, 51, 102, 0.15);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #00264d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+    ul#teamList li:hover,
+    ul#teamList li:focus {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 32px rgba(0, 51, 102, 0.3);
+      outline: none;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      margin-top: 5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      letter-spacing: 0.7px;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      header.page-header h1 {
+        font-size: 2.6rem;
+      }
+      section.about-content {
+        padding: 2rem 1.5rem 1.5rem;
+      }
+      section.team {
+        padding: 1.5rem 1.5rem 2rem;
+      }
+      nav.main-nav {
+        padding: 1rem 1.2rem;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      nav.main-nav ul {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav" aria-label="Primary Navigation">
+    <div class="logo" aria-label="Vic Power logo">Vic Power</div>
+    <ul role="menubar">
+      <li role="none"><a role="menuitem" href="employee-home.html">Home</a></li>
+      <li role="none"><a role="menuitem" href="contact1.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header" role="banner">
+    <h1>About Vic Power</h1>
+    <p>Delivering innovative energy solutions with passion, reliability, and excellence.</p>
+  </header>
+
+  <main role="main" class="content-wrapper" style="width:100%;max-width:1080px;">
+    <section class="about-content" aria-labelledby="about-heading">
+      <h2 id="about-heading">Who We Are</h2>
+      <p>
+        At <strong>Vic Power</strong>, we specialize in providing top-tier electrical and energy services to both residential and commercial clients. Founded over 15 years ago, our mission has always been to empower communities through sustainable and innovative energy solutions.
+      </p>
+      <p>
+        Our team is made up of highly skilled engineers, technicians, and customer service experts committed to exceeding client expectations by delivering safe, efficient, and cost-effective services.
+      </p>
+      <p>
+        Whether you’re looking for solar panel installations, energy audits, or electrical maintenance, Vic Power stands ready with cutting-edge technology and unmatched expertise.
+      </p>
+    </section>
+
+    <section class="team" aria-labelledby="team-heading">
+      <h2 id="team-heading">Meet Our Team</h2>
+      <ul id="teamList" aria-live="polite" aria-relevant="additions"></ul>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    &copy; 2025 Vic Power. All rights reserved.
+  </footer>
+
+  <script>
+    // Assuming Firebase is initialized already as 'db'
+    db.collection("team").get().then((snapshot) => {
+      const list = document.getElementById("teamList");
+      if (snapshot.empty) {
+        const noMembers = document.createElement("li");
+        noMembers.innerText = "No team members found at the moment.";
+        noMembers.style.fontStyle = "italic";
+        list.appendChild(noMembers);
+        return;
+      }
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${data.name}</strong><br><em>${data.role}</em><br><small>${data.bio || ''}</small>`;
+        list.appendChild(li);
+      });
+    }).catch((err) => {
+      console.error("Error fetching team members:", err);
+      const list = document.getElementById("teamList");
+      const errorLi = document.createElement("li");
+      errorLi.innerText = "Unable to load team members right now.";
+      errorLi.style.fontStyle = "italic";
+      list.appendChild(errorLi);
+    });
+  </script>
+</body>
+</html>

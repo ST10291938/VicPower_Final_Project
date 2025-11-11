@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us - Vic Power</title>
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #011627, #014d4d);
+  font-family: 'Montserrat', sans-serif;
+  color: #e0e6f0;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+form#contactForm {
+  background: #0b1624;
+  padding: 40px 50px;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.5),
+    inset 0 0 60px #009688;
+  transition: box-shadow 0.3s ease;
+}
+form#contactForm:hover {
+  box-shadow:
+    0 8px 30px rgba(0,0,0,0.8),
+    inset 0 0 90px #00bfa5;
+}
+
+form#contactForm label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #00bfa5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+form#contactForm input[type="text"],
+form#contactForm input[type="email"],
+form#contactForm textarea {
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #0b1624;
+  background: #e0f2f1;
+  box-shadow: inset 2px 2px 8px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+form#contactForm input[type="text"]:focus,
+form#contactForm input[type="email"]:focus,
+form#contactForm textarea:focus {
+  background: #b2dfdb;
+  box-shadow: 0 0 8px 2px #00bfa5;
+  outline: none;
+}
+
+form#contactForm textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+form#contactForm button[type="submit"] {
+  background: linear-gradient(135deg, #00bfa5, #00796b);
+  color: #ffffff;
+  border: none;
+  padding: 16px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  width: 100%;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow:
+    0 6px 20px rgba(0, 191, 165, 0.7),
+    0 0 25px #00bfa5;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+form#contactForm button[type="submit"]:hover {
+  background: linear-gradient(135deg, #00796b, #004d40);
+  box-shadow:
+    0 8px 30px rgba(0, 121, 107, 0.9),
+    0 0 35px #00796b;
+}
+
+/* Response message */
+#responseMsg {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 24px;
+  min-height: 1.5em;
+  user-select: none;
+  color: #00bfa5;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 40px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  background: #00332f;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+}
+
+.navbar ul li {
+  flex: 1;
+  text-align: center;
+}
+
+.navbar ul li a {
+  display: block;
+  padding: 12px 0;
+  text-decoration: none;
+  color: #00bfa5;
+  font-weight: 600;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  border-radius: 14px;
+}
+
+.navbar ul li a:hover,
+.navbar ul li a.active {
+  background: #004d40;
+  color: #e0f2f1;
+  box-shadow: 0 0 15px #00bfa5;
+}
+
+/* Responsive tweaks */
+@media (max-width: 520px) {
+  form#contactForm {
+    padding: 30px 25px;
+    border-radius: 12px;
+  }
+}
+
+  </style>
+  
+<body>
+    <nav class="navbar">
+        <ul>
+          <li><a href="employee-home.html">Home</a></li>
+          <li><a href="about1.html">About Us</a></li>
+        </ul>
+      </nav>
+      
+  <form id="contactForm" aria-label="Contact form">
+    <label for="name">Full Name <sup aria-hidden="true">*</sup></label>
+    <input type="text" id="name" name="name" required placeholder="Your full name" />
+
+    <label for="email">Email Address <sup aria-hidden="true">*</sup></label>
+    <input type="email" id="email" name="email" required placeholder="you@example.com" />
+
+    <label for="phone">Phone Number</label>
+    <input type="text" id="phone" name="phone" placeholder="+27 698 5748" />
+
+    <label for="message">Your Message <sup aria-hidden="true">*</sup></label>
+    <textarea id="message" name="message" required placeholder="Write your message here..."></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <div id="responseMsg" style="margin-top: 20px; font-weight: 600;"></div>
+
+  <script>
+    // Your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_mQ4Ext2ma5p4wz0rjz4ccMBIzE7rPiw",
+      authDomain: "vic-power.firebaseapp.com",
+      projectId: "vic-power",
+      storageBucket: "vic-power.appspot.com",
+      messagingSenderId: "952244053756",
+      appId: "1:952244053756:web:db933cf09e289a7e2ed979",
+      measurementId: "G-7Z5DF51HFY"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const form = document.getElementById('contactForm');
+    const responseMsg = document.getElementById('responseMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        message: form.message.value.trim(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      };
+
+      if (!data.name || !data.email || !data.message) {
+        responseMsg.style.color = 'red';
+        responseMsg.textContent = 'Please fill in all required fields.';
+        return;
+      }
+
+      try {
+        await db.collection('contactMessages').add(data);
+
+        responseMsg.style.color = 'green';
+        responseMsg.textContent = 'Thank you for contacting us! We will get back to you soon.';
+        form.reset();
+      } catch (error) {
+        responseMsg.style.color = 'red';
+        responseMsg.textContent = 'Error sending message. Please try again later.';
+        console.error('Error writing document: ', error);
+      }
+    });
+  </script>
+</body>
+</html>

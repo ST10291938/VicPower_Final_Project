@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Employee Panel - Dashboard</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- External CSS if you have -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      margin-bottom: 30px;
+    }
+    nav {
+      margin-bottom: 30px;
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #1b4f72;
+      text-decoration: underline;
+    }
+
+    ul#allBookings {
+      list-style-type: none;
+      padding-left: 0;
+      max-height: 480px;
+      overflow-y: auto;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 30px;
+    }
+
+    .booking-item {
+      background: #fefefe;
+      padding: 18px 22px;
+      margin: 12px 0;
+      border-radius: 10px;
+      border: 1px solid #e1e4e8;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: box-shadow 0.3s ease;
+    }
+    .booking-item:hover {
+      box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+    }
+    .booking-info {
+      max-width: 65%;
+      font-size: 1.1rem;
+      color: #34495e;
+    }
+    .booking-info strong {
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    .booking-info em {
+      font-style: italic;
+      color: #7f8c8d;
+    }
+    .booking-info b {
+      color: #2980b9;
+      font-weight: 700;
+    }
+    .booking-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 200px;
+    }
+    .booking-actions button {
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.15s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      color: white;
+      font-weight: 600;
+    }
+    .booking-actions button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .approve-btn {
+      background: #27ae60;
+      box-shadow: 0 4px 12px #27ae60aa;
+    }
+    .cancel-btn {
+      background: #c0392b;
+      box-shadow: 0 4px 12px #c0392baa;
+    }
+    .complete-btn {
+      background: #2980b9;
+      box-shadow: 0 4px 12px #2980b9aa;
+    }
+
+    #logoutBtn {
+      background: #e74c3c;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto;
+      display: block;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.6);
+    }
+    #logoutBtn:hover {
+      background: #c0392b;
+      box-shadow: 0 8px 20px rgba(192, 57, 43, 0.7);
+    }
+
+    /* Scrollbar for bookings list */
+    ul#allBookings::-webkit-scrollbar {
+      width: 8px;
+    }
+    ul#allBookings::-webkit-scrollbar-thumb {
+      background-color: #2980b9;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Employee Dashboard</h1>
+    <p class="subtitle">Manage all client bookings efficiently and update their status in real-time.</p>
+
+    <nav>
+      <a href="index.html">Login</a>
+      <a href="employee-profile.html">Profile</a>
+      <a href="about1.html">About Us</a>
+      <a href="contact1.html">Contact</a>
+    </nav>
+
+    <ul id="allBookings">
+      <!-- Bookings will load here dynamically -->
+    </ul>
+
+    <button id="logoutBtn" aria-label="Logout from Employee Panel">Logout</button>
+  </div>
+
+  <script src="js/firebase.js"></script>
+  <script>
+    auth.onAuthStateChanged(async user => {
+      if (!user) return window.location.href = "index.html";
+
+      const doc = await db.collection("users").doc(user.uid).get();
+
+      if (!doc.exists || doc.data().role !== "employee") {
+        alert("Unauthorized access detected. Redirecting to login.");
+        auth.signOut();
+        window.location.href = "index.html";
+        return;
+      }
+
+      const snapshot = await db.collection("bookings").orderBy("createdAt", "desc").get();
+      const bookingsList = document.getElementById("allBookings");
+      bookingsList.innerHTML = "";
+
+      snapshot.forEach(doc => {
+        const booking = doc.data();
+
+        // Create booking item container
+        const li = document.createElement("li");
+        li.classList.add("booking-item");
+
+        // Booking details
+        const infoDiv = document.createElement("div");
+        infoDiv.classList.add("booking-info");
+        infoDiv.innerHTML = `<strong>${booking.name}</strong> booked <em>${booking.service}</em> on ${booking.date} at ${booking.time} — <b>${booking.status}</b>`;
+        li.appendChild(infoDiv);
+
+        // Actions container
+        const actionsDiv = document.createElement("div");
+        actionsDiv.classList.add("booking-actions");
+
+        // Buttons based on status
+        if (booking.status === "Pending") {
+          const approveBtn = document.createElement("button");
+          approveBtn.classList.add("approve-btn");
+          approveBtn.innerText = "Approve";
+          approveBtn.onclick = () => updateBookingStatus(doc.id, "Confirmed");
+
+          const cancelBtn = document.createElement("button");
+          cancelBtn.classList.add("cancel-btn");
+          cancelBtn.innerText = "Cancel";
+          cancelBtn.onclick = () => updateBookingStatus(doc.id, "Cancelled");
+
+          actionsDiv.appendChild(approveBtn);
+          actionsDiv.appendChild(cancelBtn);
+        } else if (booking.status === "Confirmed") {
+          const completeBtn = document.createElement("button");
+          completeBtn.classList.add("complete-btn");
+          completeBtn.innerText = "Mark Completed";
+          completeBtn.onclick = () => updateBookingStatus(doc.id, "Completed");
+
+          const cancelBtn = document.createElement("button");
+          cancelBtn.classList.add("cancel-btn");
+          cancelBtn.innerText = "Cancel";
+          cancelBtn.onclick = () => updateBookingStatus(doc.id, "Cancelled");
+
+          actionsDiv.appendChild(completeBtn);
+          actionsDiv.appendChild(cancelBtn);
+        }
+
+        li.appendChild(actionsDiv);
+        bookingsList.appendChild(li);
+      });
+    });
+
+    // Update booking status in Firestore
+    function updateBookingStatus(bookingId, newStatus) {
+      db.collection("bookings").doc(bookingId).update({ status: newStatus })
+        .then(() => {
+          alert(`Booking status updated to "${newStatus}".`);
+          location.reload();  // Refresh list to reflect change
+        })
+        .catch(err => {
+          console.error("Error updating booking status:", err);
+          alert("Failed to update booking: " + err.message);
+        });
+    }
+
+    // Logout button
+    document.getElementById("logoutBtn").onclick = () =>
+      auth.signOut().then(() => window.location.href = "index.html");
+  </script>
+</body>
+</html>

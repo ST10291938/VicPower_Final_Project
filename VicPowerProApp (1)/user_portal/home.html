@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home | Vic Power</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js" defer></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    nav.main-nav {
+      background-color: #004080;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    nav.main-nav .logo {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: #fff;
+    }
+    nav.main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav.main-nav ul li a {
+      color: #cce0ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    nav.main-nav ul li a:hover {
+      color: #fff;
+    }
+
+    header.hero {
+      background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1500&q=80') no-repeat center/cover;
+      height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    header.hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,64,128,0.65);
+    }
+    header.hero h1, header.hero p {
+      position: relative;
+      z-index: 1;
+    }
+
+    main.container {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    main.container nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: #0056b3;
+      font-weight: 600;
+    }
+
+    .profile-pic-fixed {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #cce0ff;
+    }
+    .profile-pic-fixed img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    button#logoutBtn {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 30px;
+      background-color: #0056b3;
+      color: #fff;
+      cursor: pointer;
+    }
+    button#logoutBtn:hover {
+      background-color: #003d80;
+    }
+
+    /* Recent Services Section */
+    section.services {
+      background-color: #f8f9fb;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    section.services h2 {
+      color: #00264d;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    .service-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+    .service-card h3 {
+      color: #004080;
+      margin-bottom: 0.5rem;
+    }
+    .service-card p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #00264d;
+      color: #cce0ff;
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+    }
+    footer p {
+      margin: 0.5rem 0;
+    }
+    footer a {
+      color: #66b2ff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <nav class="main-nav">
+    <div class="logo">Vic Power</div>
+    <ul>
+      <li><a href="home.html" class="active">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="booking.html">Book Now</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="profile-pic-fixed">
+    <img id="profilePic" src="default-profile.png" alt="Profile Picture" />
+  </div>
+
+  <header class="hero">
+    <h1>Welcome, <span id="displayName">User</span>!</h1>
+    <p>Your trusted electrical service partner.</p>
+  </header>
+
+  <main class="container">
+    <h2>Quick Links</h2>
+    <nav>
+      <a href="services.html">Services</a>
+      <a href="booking.html">Book Now</a>
+      <a href="booking-status.html">My Bookings</a>
+      <a href="about.html">About Us</a>
+    </nav>
+    <button id="logoutBtn">Logout</button>
+  </main>
+
+  <!-- Recent Services -->
+  <section class="services">
+    <h2>Recent Services</h2>
+    <div class="service-cards" id="serviceCards">
+      <p>Loading recent services...</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Vic Power. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@vicpower.co.za">info@vicpower.co.za</a></p>
+    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+  </footer>
+
+  <script src="js/firebase.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const profilePic = document.getElementById('profilePic');
+      const displayNameElem = document.getElementById('displayName');
+      const serviceCards = document.getElementById('serviceCards');
+
+      // Check Authentication
+      auth.onAuthStateChanged(async (user) => {
+        if (!user) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          displayNameElem.innerText = userDoc.exists && userDoc.data().name
+            ? userDoc.data().name
+            : user.email;
+          profilePic.src = userDoc.exists && userDoc.data().profilePicUrl
+            ? userDoc.data().profilePicUrl
+            : "default-profile.png";
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+
+        // Fetch recent services dynamically
+        try {
+          const snapshot = await db.collection("services")
+            .orderBy("date", "desc")
+            .limit(3)
+            .get();
+
+          serviceCards.innerHTML = "";
+          if (snapshot.empty) {
+            serviceCards.innerHTML = "<p>No recent services available.</p>";
+          } else {
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              const card = document.createElement("div");
+              card.className = "service-card";
+              card.innerHTML = `
+                <h3>${data.title || "Untitled Service"}</h3>
+                <p>${data.description || "No description provided."}</p>
+              `;
+              serviceCards.appendChild(card);
+            });
+          }
+        } catch (error) {
+          console.error("Error loading services:", error);
+          serviceCards.innerHTML = "<p>Error loading services.</p>";
+        }
+      });
+
+      // Logout
+      document.getElementById("logoutBtn").onclick = () =>
+        auth.signOut().then(() => window.location.href = "index.html");
+    });
+  </script>
+</body>
+</html>

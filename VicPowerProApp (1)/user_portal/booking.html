@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book a Service | Vic Power</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js" defer></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f9ff;
+      color: #333;
+    }
+
+    /* Navigation Bar */
+    nav.main-nav {
+      background-color: #004080;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    nav.main-nav .logo {
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: #fff;
+    }
+
+    nav.main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav.main-nav ul li a {
+      color: #cce0ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav.main-nav ul li a:hover {
+      color: #fff;
+    }
+
+    /* Booking Form Container */
+    .container {
+      max-width: 600px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #004080;
+      font-size: 2.2rem;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    form input,
+    form textarea {
+      border: 1.5px solid #b3c7e6;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 1.1rem;
+      background-color: #f0f6ff;
+      color: #003366;
+      transition: all 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      border-color: #004080;
+      background-color: #fff;
+      box-shadow: 0 0 6px rgba(0, 64, 128, 0.4);
+      outline: none;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    form button {
+      background-color: #004080;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #003366;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 64, 128, 0.3);
+    }
+
+    nav.secondary-nav {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    nav.secondary-nav a {
+      color: #004080;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav.secondary-nav a:hover {
+      color: #001f40;
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      background-color: #004080;
+      color: #fff;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="main-nav">
+    <div class="logo">Vic Power</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="booking.html" class="active">Book Now</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    <h1>Book a Service</h1>
+    <form id="bookingForm" novalidate>
+      <input type="text" id="service" name="service" placeholder="Service Name" required autocomplete="off" />
+      <input type="date" id="date" name="date" required />
+      <input type="time" id="time" name="time" required />
+      <textarea id="notes" name="notes" rows="4" placeholder="Additional Notes (optional)"></textarea>
+      <button type="submit">Submit Booking</button>
+    </form>
+
+    <nav class="secondary-nav">
+      <a href="home.html">Home</a> | 
+      <a href="booking-status.html">My Bookings</a>
+    </nav>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vic Power. All Rights Reserved.</p>
+  </footer>
+
+  <script src="js/firebase.js" defer></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      auth.onAuthStateChanged(user => { 
+        if (!user) {
+          window.location.href = "index.html"; 
+        }
+      });
+
+      document.getElementById("bookingForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const user = auth.currentUser;
+
+        if (!user) {
+          alert("You must be logged in to book a service.");
+          return;
+        }
+
+        try {
+          const userDoc = await db.collection("users").doc(user.uid).get();
+          const userName = userDoc.exists ? userDoc.data().name : "Unknown";
+
+          await db.collection("bookings").add({
+            userId: user.uid,
+            name: userName,
+            service: document.getElementById("service").value.trim(),
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value,
+            notes: document.getElementById("notes").value.trim(),
+            status: "Pending",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+
+          alert("Booking submitted successfully!");
+          window.location.href = "booking-status.html";
+        } catch (error) {
+          console.error("Booking error:", error);
+          alert("Error submitting booking: " + error.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
