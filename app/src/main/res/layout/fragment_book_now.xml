@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F4F6">
+
+    <!-- Background dim or image (optional, could remove if just white) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bookingCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="24dp"
+        app:cardBackgroundColor="#FFFFFFFF"
+        app:cardElevation="8dp"
+        android:clipToOutline="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book a Service"
+                android:textColor="#1F2937"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:paddingBottom="16dp" />
+
+            <!-- Service Name -->
+            <EditText
+                android:id="@+id/etService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Service Name"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="#111827"
+                android:textColorHint="#9CA3AF"
+                android:background="@drawable/white_input_bg"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Date -->
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Date"
+                android:focusable="false"
+                android:clickable="true"
+                android:padding="12dp"
+                android:textColor="#111827"
+                android:textColorHint="#9CA3AF"
+                android:background="@drawable/white_input_bg"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Time -->
+            <EditText
+                android:id="@+id/etTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Time"
+                android:focusable="false"
+                android:clickable="true"
+                android:padding="12dp"
+                android:textColor="#111827"
+                android:textColorHint="#9CA3AF"
+                android:background="@drawable/white_input_bg"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Notes -->
+            <EditText
+                android:id="@+id/etNotes"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:hint="Additional Notes (optional)"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:padding="12dp"
+                android:textColor="#111827"
+                android:textColorHint="#9CA3AF"
+                android:background="@drawable/white_input_bg"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Submit Button -->
+            <Button
+                android:id="@+id/btnSubmitBooking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit Booking"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:backgroundTint="#020A1C"
+                android:textColor="#FFFFFF"
+                android:padding="14dp"
+                android:elevation="4dp"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

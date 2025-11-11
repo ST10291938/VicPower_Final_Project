@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "952244053756",
+    "project_id": "vic-power",
+    "storage_bucket": "vic-power.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952244053756:android:15126bedb0f854232ed979",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtTsduw2Qlo4H4uiS5v4GdmZmta3CeZPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952244053756:android:44cb5b67f68616812ed979",
+        "android_client_info": {
+          "package_name": "com.example.vic_power"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtTsduw2Qlo4H4uiS5v4GdmZmta3CeZPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952244053756:android:c84b4c9c2a7a80fb2ed979",
+        "android_client_info": {
+          "package_name": "com.example.vicpowerapp1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtTsduw2Qlo4H4uiS5v4GdmZmta3CeZPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952244053756:android:2b2a570b83319ead2ed979",
+        "android_client_info": {
+          "package_name": "com.example.vicpowerappfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtTsduw2Qlo4H4uiS5v4GdmZmta3CeZPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952244053756:android:702481f7bd2235182ed979",
+        "android_client_info": {
+          "package_name": "com.vicpower.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtTsduw2Qlo4H4uiS5v4GdmZmta3CeZPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
